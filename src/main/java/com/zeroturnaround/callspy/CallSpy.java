@@ -17,14 +17,6 @@ public class CallSpy implements ClassFileTransformer {
                           ProtectionDomain protectionDomain,
                           byte[] classfileBuffer) throws IllegalClassFormatException {
 
-    if (!className.startsWith("com/zt") &&
-        !className.startsWith("org/springframework/samples")
-        ) {
-      return classfileBuffer;
-    }
-
-//    System.out.println("Transforming class " + className + " in " + loader.getClass().getName());
-
     ClassPool cp = ClassPool.getDefault();
     cp.importPackage("com.zeroturnaround.callspy");
 
