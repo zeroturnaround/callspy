@@ -1,0 +1,36 @@
+apply plugin: 'java'
+
+group = "com.zeroturnaround"
+jar.baseName = 'callspy'
+version = 0.1
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.5'
+    compile 'org.javassist:javassist:3.18.1-GA'
+
+    testCompile "junit:junit:4.11"
+}
+
+compileJava {
+    options.debug = true
+}
+
+jar {
+    archiveName = "${rootProject.name}-${rootProject.version}.jar"
+    manifest {
+        attributes(
+                'Main-Class': 'com.zeroturnaround.callspy.Main',
+                'Premain-Class': 'com.zeroturnaround.callspy.Agent',
+                'Agent-Class': 'com.zeroturnaround.callspy.Agent',
+                'Can-Redefine-Classes': 'true',
+                'Can-Retransform-Classes': 'true',
+                'Can-Set-Native-Method-Prefix': 'true',
+                'Implementation-Title': "CallSpy",
+                'Implementation-Version': rootProject.version
+        )
+    }
+}
