@@ -3,5 +3,8 @@ callspy
 
 A simple tracing agent
 
+Build:
+gradlew jar
+
 Run:
-java -DXbootclasspath/p:javassist.jar -javaagent:callspy-0.1.jar YourClazz
+java -DXbootclasspath/p:javassist.jar:callspy.jar -javaagent:callspy.jar YourClazz

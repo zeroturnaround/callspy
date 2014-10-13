@@ -9,9 +9,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.5'
     compile 'org.javassist:javassist:3.18.1-GA'
-
     testCompile "junit:junit:4.11"
 }
 

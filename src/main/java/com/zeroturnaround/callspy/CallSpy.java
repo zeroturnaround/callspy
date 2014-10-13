@@ -20,23 +20,27 @@ public class CallSpy implements ClassFileTransformer {
     ClassPool cp = ClassPool.getDefault();
     cp.importPackage("com.zeroturnaround.callspy");
 
+    if (className.startsWith("com/zeroturnaround/callspy")) {
+      return classfileBuffer;
+    }
+
     try {
       CtClass ct = cp.makeClass(new ByteArrayInputStream(classfileBuffer));
 
       CtMethod[] declaredMethods = ct.getDeclaredMethods();
       for (CtMethod method : declaredMethods) {
-        if (!method.isEmpty()) {
           method.insertBefore(" { " +
               "Stack.push();" +
               "Stack.log(\"" + className + "." + method.getName() + "\"); " +
               "}");
           method.insertAfter("{ Stack.pop(); }");
-        }
       }
 
       return ct.toBytecode();
     } catch (Throwable e) {
-      e.printStackTrace();
+      if (Boolean.getBoolean("callspy.debug")) {
+        System.out.println("Transformation failed for " + className + ": " + e.getMessage());
+      }
     }
 
     return classfileBuffer;
