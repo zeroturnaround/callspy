@@ -24,6 +24,11 @@ public class CallSpy implements ClassFileTransformer {
       return classfileBuffer;
     }
 
+    if (!className.startsWith("org/springframework") &&
+        !className.startsWith("org/hibernate")) {
+      return classfileBuffer;
+    }
+
     try {
       CtClass ct = cp.makeClass(new ByteArrayInputStream(classfileBuffer));
 
@@ -33,7 +38,7 @@ public class CallSpy implements ClassFileTransformer {
               "Stack.push();" +
               "Stack.log(\"" + className + "." + method.getName() + "\"); " +
               "}");
-          method.insertAfter("{ Stack.pop(); }");
+          method.insertAfter("{ Stack.pop(); }", true);
       }
 
       return ct.toBytecode();
