@@ -19,6 +19,10 @@ compileJava {
 
 jar {
     archiveName = "${rootProject.name}-${rootProject.version}.jar"
+
+    //build fat jar
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }}
+
     manifest {
         attributes(
                 'Main-Class': 'com.zeroturnaround.callspy.Main',
@@ -28,7 +32,10 @@ jar {
                 'Can-Retransform-Classes': 'true',
                 'Can-Set-Native-Method-Prefix': 'true',
                 'Implementation-Title': "CallSpy",
-                'Implementation-Version': rootProject.version
+                'Implementation-Version': rootProject.version,
+                'Built-By': System.getProperty('user.name'),
+                'Built-Date': new Date(),
+                'Built-JDK': System.getProperty('java.version')
         )
     }
 }
