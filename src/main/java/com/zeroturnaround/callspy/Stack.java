@@ -1,19 +1,20 @@
 package com.zeroturnaround.callspy;
 
+@SuppressWarnings("unused")
 public class Stack {
 
-  static String ident = "";
+  static String indent = "";
 
   public static void push() {
-    ident += " ";
+    indent += " ";
   }
 
   public static void pop() {
-    ident = ident.substring(1);
+    indent = indent.substring(1);
   }
 
   public static void log(String string){
-    System.out.println(ident + string);
+    System.out.println(indent + string);
   }
 
 }
