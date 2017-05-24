@@ -25,7 +25,7 @@ public class CallSpy implements ClassFileTransformer {
     //region filter agent classes
     // we do not want to profile ourselves
     if (className.startsWith("com/zeroturnaround/callspy")) {
-      return classfileBuffer;
+      return null;
     }
     //endregion
 
